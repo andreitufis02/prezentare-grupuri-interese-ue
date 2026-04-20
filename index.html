@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Equity ca Grupuri de Interese în UE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #002060;
+  --navy2:   #003087;
+  --blue:    #0066CC;
+  --blue2:   #1E88E5;
+  --blue3:   #64B5F6;
+  --sky:     #E3F2FD;
+  --sky2:    #BBDEFB;
+  --teal:    #00838F;
+  --orange:  #E65100;
+  --green:   #1B5E20;
+  --green2:  #2E7D32;
+  --red:     #B71C1C;
+  --red2:    #C62828;
+  --gray1:   #F5F7FA;
+  --gray2:   #EEF1F5;
+  --gray3:   #CFD8DC;
+  --gray4:   #90A4AE;
+  --gray5:   #546E7A;
+  --text:    #1A1A2E;
+  --text2:   #37474F;
+  --text3:   #546E7A;
+  --white:   #FFFFFF;
+  --divider: #E0E6ED;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:#1A1A2E;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;}
+
+/* ─── DECK ─────────────────────────────────────── */
+#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+
+/* ─── SLIDE BASE ────────────────────────────────── */
+.slide{
+  position:absolute;inset:0;
+  background:var(--white);
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease,transform .35s ease;
+  transform:translateX(48px);
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.slide.prev{opacity:0;transform:translateX(-48px);}
+
+/* ─── CHROME ────────────────────────────────────── */
+#prog-bar{position:fixed;top:0;left:0;right:0;height:4px;background:var(--sky2);z-index:200;}
+#prog-fill{height:100%;background:var(--navy);transition:width .35s ease;}
+#nav-bar{
+  position:fixed;bottom:0;left:0;right:0;height:48px;
+  background:var(--navy);display:flex;align-items:center;
+  justify-content:space-between;padding:0 32px;z-index:200;
+}
+.nbtn{
+  background:transparent;border:1px solid rgba(255,255,255,.25);
+  color:rgba(255,255,255,.75);cursor:pointer;
+  font-family:'IBM Plex Sans',sans-serif;font-size:.72rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 18px;transition:all .2s;
+}
+.nbtn:hover{border-color:var(--blue3);color:#fff;}
+.nbtn:disabled{opacity:.2;cursor:default;}
+#slide-ctr{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  color:rgba(255,255,255,.5);letter-spacing:.04em;
+}
+#slide-ctr span{color:var(--blue3);}
+#kb{
+  position:fixed;bottom:56px;left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace;font-size:.62rem;
+  color:rgba(255,255,255,.35);letter-spacing:.1em;
+  pointer-events:none;opacity:0;transition:opacity .4s;
+}
+#kb.show{opacity:1;}
+
+/* ─── SLIDE HEADER ──────────────────────────────── */
+.sh{
+  flex-shrink:0;
+  background:var(--navy);
+  padding:18px 48px 16px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+}
+.sh-left{}
+.sh-tag{
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue3);font-weight:600;margin-bottom:4px;
+}
+.sh-title{
+  font-size:clamp(1.1rem,1.7vw,1.55rem);font-weight:700;
+  color:#fff;line-height:1.15;letter-spacing:-.01em;
+}
+.sh-right{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:2.2rem;font-weight:300;
+  color:rgba(255,255,255,.15);line-height:1;
+  margin-left:24px;flex-shrink:0;
+}
+
+/* ─── SLIDE BODY ────────────────────────────────── */
+.sb{
+  flex:1;overflow-y:auto;padding:32px 52px 24px;
+  background:var(--white);
+}
+.sb::-webkit-scrollbar{width:4px;}
+.sb::-webkit-scrollbar-track{background:var(--gray1);}
+.sb::-webkit-scrollbar-thumb{background:var(--gray3);}
+
+/* ─── BODY TYPOGRAPHY ───────────────────────────── */
+.body-p{font-size:.9rem;line-height:1.7;color:var(--text2);}
+.lead-p{font-size:1rem;line-height:1.65;color:var(--text);font-weight:400;}
+.sub{
+  font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--navy);font-weight:700;
+  border-bottom:2px solid var(--navy);padding-bottom:5px;
+  margin:20px 0 12px;
+}
+.sub:first-child{margin-top:0;}
+.callout{
+  background:var(--sky);border-left:4px solid var(--navy);
+  padding:14px 20px;margin:14px 0;
+}
+.callout .co-lbl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:5px;}
+.callout p{font-size:.875rem;line-height:1.6;color:var(--text);}
+.callout em{font-style:normal;font-weight:600;color:var(--navy);}
+
+/* ─── STAT BOXES ────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:2px;margin:16px 0;}
+.stat{
+  background:var(--navy);padding:18px 16px;
+}
+.stat-n{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(1.4rem,2vw,2rem);font-weight:600;
+  color:#fff;line-height:1.1;
+}
+.stat-n span{font-size:.55em;font-weight:400;color:var(--blue3);}
+.stat-l{font-size:.7rem;color:var(--blue3);margin-top:5px;line-height:1.3;letter-spacing:.02em;}
+
+/* ─── GRID HELPERS ──────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.g2-wide{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+.g2-narr{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;}
+
+/* ─── CARDS ─────────────────────────────────────── */
+.card{background:var(--gray1);border:1px solid var(--divider);padding:16px 18px;}
+.card-h{
+  font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--navy);font-weight:700;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:2px solid var(--sky2);
+}
+.card p{font-size:.83rem;line-height:1.6;color:var(--text2);}
+.card ul{list-style:none;margin-top:8px;}
+.card ul li{
+  font-size:.82rem;line-height:1.55;color:var(--text2);
+  padding-left:14px;position:relative;margin-bottom:4px;
+}
+.card ul li::before{content:'▸';position:absolute;left:0;color:var(--blue);font-size:.7rem;top:2px;}
+
+/* ─── TABLE ─────────────────────────────────────── */
+.dt{width:100%;border-collapse:collapse;margin:8px 0;font-size:.83rem;}
+.dt th{
+  background:var(--navy);color:#fff;
+  text-align:left;padding:9px 12px;
+  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+}
+.dt td{padding:9px 12px;border-bottom:1px solid var(--divider);color:var(--text);}
+.dt td.mono{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--navy);}
+.dt td.muted{color:var(--text3);}
+.dt tr:nth-child(even) td{background:var(--gray1);}
+.dt tr:hover td{background:var(--sky);}
+.pill{display:inline-block;padding:2px 8px;font-size:.65rem;font-weight:700;letter-spacing:.06em;border-radius:2px;}
+.pill.ok{background:#E8F5E9;color:#2E7D32;}
+.pill.warn{background:#FFF3E0;color:#E65100;}
+.pill.no{background:#FFEBEE;color:#C62828;}
+
+/* ─── COMPARISON ─────────────────────────────────── */
+.comp{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;margin:8px 0;}
+.comp-hd{
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:8px 12px;font-weight:700;border-bottom:3px solid;
+}
+.comp-hd.before{color:var(--red2);border-color:var(--red2);background:#FFF8F8;}
+.comp-hd.arrow{text-align:center;color:var(--gray4);background:var(--gray1);display:flex;align-items:center;justify-content:center;}
+.comp-hd.after{color:var(--green2);border-color:var(--green2);background:#F1F8E9;}
+.comp-row{display:contents;}
+.comp-cell{padding:9px 12px;border-bottom:1px solid var(--divider);font-size:.83rem;line-height:1.5;}
+.comp-cell.before{background:#FFF8F8;color:#B71C1C;}
+.comp-cell.arrow{background:var(--gray1);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--navy);}
+.comp-cell.after{background:#F1F8E9;color:#1B5E20;}
+
+/* ─── TIMELINE ───────────────────────────────────── */
+.tl{position:relative;padding-left:24px;margin:8px 0;}
+.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:1px;background:var(--sky2);}
+.tl-item{position:relative;margin-bottom:14px;}
+.tl-item::before{
+  content:'';position:absolute;left:-20px;top:5px;
+  width:9px;height:9px;background:var(--navy);
+  border:2px solid #fff;box-shadow:0 0 0 1px var(--navy);
+}
+.tl-item.neg::before{background:var(--red);}
+.tl-item.pos::before{background:var(--green2);}
+.tl-item.neu::before{background:var(--gray4);}
+.tl-yr{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--navy);font-weight:600;margin-bottom:2px;}
+.tl-txt{font-size:.82rem;line-height:1.55;color:var(--text2);}
+.tl-txt strong{color:var(--text);font-weight:600;}
+
+/* ─── LEVEL LIST ────────────────────────────────── */
+.ll-item{display:flex;align-items:stretch;margin-bottom:3px;}
+.ll-num{
+  width:40px;flex-shrink:0;background:var(--navy);
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;
+}
+.ll-body{
+  flex:1;background:var(--gray1);border:1px solid var(--divider);
+  border-left:none;padding:12px 16px;
+}
+.ll-title{font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.ll-desc{font-size:.8rem;line-height:1.55;color:var(--text2);}
+
+/* ─── COVER ──────────────────────────────────────── */
+#cover-slide{
+  background:var(--navy);
+  justify-content:flex-end;
+}
+.cov-stripe{
+  position:absolute;top:0;left:0;right:0;height:6px;
+  background:linear-gradient(90deg,var(--blue2),var(--teal));
+}
+.cov-content{
+  position:relative;padding:0 64px 64px;
+  display:flex;flex-direction:column;
+}
+.cov-divider{width:64px;height:3px;background:var(--blue2);margin-bottom:24px;}
+.cov-title{
+  font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:700;
+  color:#fff;line-height:1.1;letter-spacing:-.02em;
+  max-width:780px;margin-bottom:16px;
+}
+.cov-sub{
+  font-size:clamp(.9rem,1.4vw,1.1rem);color:var(--blue3);
+  font-weight:300;max-width:620px;margin-bottom:40px;line-height:1.5;
+}
+.cov-meta{display:flex;gap:40px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,.12);}
+.cm-lbl{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue3);margin-bottom:3px;font-weight:600;}
+.cm-val{font-size:.88rem;color:rgba(255,255,255,.8);}
+.cov-bg{
+  position:absolute;right:0;top:0;bottom:0;width:42%;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.015) 0px,rgba(255,255,255,.015) 1px,transparent 1px,transparent 40px),
+             repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0px,rgba(255,255,255,.015) 1px,transparent 1px,transparent 40px);
+  pointer-events:none;
+}
+.cov-accent{
+  position:absolute;right:48px;top:48px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8rem;font-weight:700;
+  color:rgba(255,255,255,.04);line-height:1;
+  pointer-events:none;user-select:none;
+}
+
+/* ─── FINAL SLIDE ────────────────────────────────── */
+#final-slide{background:var(--navy);}
+.final-body{
+  flex:1;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:40px 48px 60px;
+}
+.final-rule{width:80px;height:3px;background:var(--blue2);margin-bottom:24px;}
+.final-quote{
+  font-size:clamp(1rem,1.8vw,1.4rem);font-weight:300;
+  color:rgba(255,255,255,.9);line-height:1.55;
+  max-width:860px;margin-bottom:36px;
+}
+.final-quote em{font-style:normal;color:var(--blue3);font-weight:600;}
+.final-meta{
+  display:flex;gap:40px;flex-wrap:wrap;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.12);
+}
+
+/* ─── SVG CHART WRAPPERS ─────────────────────────── */
+.chart-wrap{background:var(--gray1);border:1px solid var(--divider);padding:16px;}
+.chart-title{
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--navy);font-weight:700;margin-bottom:2px;
+}
+.chart-sub{font-size:.73rem;color:var(--text3);margin-bottom:12px;}
+.chart-src{font-size:.65rem;color:var(--text3);margin-top:8px;font-style:italic;}
+svg{display:block;width:100%;height:auto;}
+
+/* ─── DOSAR CARDS ────────────────────────────────── */
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.dc{background:var(--gray1);border:1px solid var(--divider);padding:14px 16px;}
+.dc-tag{
+  display:inline-block;padding:3px 8px;
+  font-size:.62rem;letter-spacing:.1em;font-weight:700;
+  background:var(--navy);color:#fff;margin-bottom:8px;
+}
+.dc-title{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.dc-text{font-size:.78rem;color:var(--text2);line-height:1.55;}
+.dc-outcome{
+  margin-top:8px;padding-top:8px;border-top:1px solid var(--divider);
+  font-size:.72rem;font-weight:700;
+}
+.dc-outcome.win{color:var(--green2);}
+.dc-outcome.partial{color:var(--orange);}
+.dc-outcome.loss{color:var(--red2);}
+
+/* ─── INSIGHT BOX ────────────────────────────────── */
+.insight{
+  background:var(--navy);padding:18px 22px;margin:14px 0;
+}
+.ins-lbl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:8px;}
+.ins-text{font-size:.9rem;color:#fff;line-height:1.6;}
+.ins-text em{font-style:normal;color:var(--blue3);font-weight:600;}
+
+/* ─── WATERFALL/BULLET CHART SUPPORT ─────────────── */
+.bar-legend{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;}
+.bl-item{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--text3);}
+.bl-dot{width:10px;height:10px;flex-shrink:0;}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:860px){
+  .sh{padding:14px 20px 12px;}
+  .sb{padding:16px 20px 12px;}
+  .g2,.g3,.g2-wide,.g2-narr,.dg,.comp{grid-template-columns:1fr;}
+  .cov-content{padding:0 24px 40px;}
+  .final-body{padding:24px 24px 56px;}
+  .sh-right{display:none;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .cov-bg,.cov-accent{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog-bar"><div id="prog-fill"></div></div>
+<div id="deck">
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 01 — COVER
+══════════════════════════════════════════════════ -->
+<section class="slide active" id="cover-slide">
+  <div class="cov-stripe"></div>
+  <div class="cov-bg"></div>
+  <div class="cov-accent">PE</div>
+  <div style="flex:1;"></div>
+  <div class="cov-content">
+    <div class="cov-divider"></div>
+    <h1 class="cov-title">Fondurile de Private Equity<br>ca Grupuri de Interese în UE</h1>
+    <p class="cov-sub">Putere de piață, influență legislativă și arhitectura lobby-ului financiar european — o analiză a mecanismelor de advocacy ale industriei PE în cadrul decizional al Uniunii Europene</p>
+    <div class="cov-meta">
+      <div><div class="cm-lbl">Autor</div><div class="cm-val">Tufiș Andrei-Mihai</div></div>
+      <div><div class="cm-lbl">Program</div><div class="cm-val">AN II Master — Politici Publice și Advocacy</div></div>
+      <div><div class="cm-lbl">Disciplina</div><div class="cm-val">Grupuri de Interese în U.E.</div></div>
+      <div><div class="cm-lbl">Instituție</div><div class="cm-val">Universitatea de Vest Timișoara</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 02 — EXECUTIVE SUMMARY
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Sinteză</div><div class="sh-title">5 Constatări Cheie</div></div>
+    <div class="sh-right">02</div>
+  </div>
+  <div class="sb">
+    <div class="g2" style="gap:10px;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:var(--navy);padding:16px 18px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:6px;">01 — Industria</div>
+          <div style="font-size:.92rem;color:#fff;font-weight:600;line-height:1.4;margin-bottom:6px;">Industria PE europeană: €846 mld. AUM (2024), ~30.000 de lobbyști activi la Bruxelles</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5;">Concentrare masivă de capital la un număr mic de actori — condiție clasică Olson (1965) pentru mobilizare politică eficientă.</div>
+        </div>
+        <div style="background:var(--navy);padding:16px 18px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:6px;">02 — Arhitectura</div>
+          <div style="font-size:.92rem;color:#fff;font-weight:600;line-height:1.4;margin-bottom:6px;">4 niveluri complementare de lobby: asociativ, direct, epistemic, coalițional</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5;">Invest Europe: €1.25–1.49M/an, 49 întâlniri nivel înalt. Model access goods (Bouwen, 2002).</div>
+        </div>
+        <div style="background:var(--navy);padding:16px 18px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:6px;">03 — Cazul AIFMD</div>
+          <div style="font-size:.92rem;color:#fff;font-weight:600;line-height:1.4;margin-bottom:6px;">Toate obiectivele cheie ale industriei obținute față de propunerea inițială (2009)</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5;">Prag control 30%→50%, leverage limits eliminate, pașaport terțe țări neactivat 15 ani.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:var(--gray1);border:1px solid var(--divider);padding:16px 18px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px;">04 — Mecanismul Central</div>
+          <div style="font-size:.92rem;color:var(--navy);font-weight:600;line-height:1.4;margin-bottom:6px;">Influența variază sistematic cu vizibilitatea publică (salience)</div>
+          <div style="font-size:.78rem;color:var(--text2);line-height:1.5;">Industria câștigă în spatele scenelor tehnice, pierde pe dimensiunile cu atenție media ridicată. Confirmat empiric: Stevens & De Bruycker (2020).</div>
+        </div>
+        <div style="background:var(--gray1);border:1px solid var(--divider);padding:16px 18px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px;">05 — Argumentul Propriu</div>
+          <div style="font-size:.92rem;color:var(--navy);font-weight:600;line-height:1.4;margin-bottom:6px;">Nu lobby excesiv — ci asimetrie cognitivă instituționalizată</div>
+          <div style="font-size:.78rem;color:var(--text2);line-height:1.5;">Regulatorii depind structural de expertiză produsă exclusiv de industria reglementată. Registrele de transparență nu pot rezolva această problemă de fond.</div>
+        </div>
+        <div style="background:var(--sky);border-left:4px solid var(--navy);padding:14px 16px;">
+          <div style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px;">Cadrul Teoretic Utilizat</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+            <span style="background:var(--navy);color:#fff;font-size:.7rem;padding:3px 8px;font-weight:600;">Bouwen (2002) — Access Goods</span>
+            <span style="background:var(--navy);color:#fff;font-size:.7rem;padding:3px 8px;font-weight:600;">Olson (1965) — Acțiune Colectivă</span>
+            <span style="background:var(--navy);color:#fff;font-size:.7rem;padding:3px 8px;font-weight:600;">Culpepper (2011) — Quiet Politics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 03 — MARKET SIZE & GROWTH
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Contextul pieței</div><div class="sh-title">Industria PE Europeană: Creștere și Concentrare</div></div>
+    <div class="sh-right">03</div>
+  </div>
+  <div class="sb">
+    <div class="stats" style="margin-bottom:16px;">
+      <div class="stat"><div class="stat-n">€846<span>mld.</span></div><div class="stat-l">AUM European (2024)<br>Invest Europe</div></div>
+      <div class="stat"><div class="stat-n">×2.1<span>×</span></div><div class="stat-l">Creștere față de 2015<br>(€406B → €846B)</div></div>
+      <div class="stat"><div class="stat-n">1,800+</div><div class="stat-l">Firme PE/VC monitorizate<br>de Invest Europe</div></div>
+      <div class="stat"><div class="stat-n">86%</div><div class="stat-l">Companii finanțate<br>care sunt IME-uri</div></div>
+      <div class="stat"><div class="stat-n">26%</div><div class="stat-l">Dry powder din<br>fonduri de pensii</div></div>
+    </div>
+    <div class="g2-wide">
+      <!-- Bar chart: AUM Growth -->
+      <div class="chart-wrap">
+        <div class="chart-title">Figura 1 — AUM European PE/VC (€ miliarde)</div>
+        <div class="chart-sub">Creștere susținută 2015–2024, cu accelerare post-2020</div>
+        <svg viewBox="0 0 480 200" style="height:180px;">
+          <!-- axes -->
+          <line x1="56" y1="10" x2="56" y2="165" stroke="#CFD8DC" stroke-width="1"/>
+          <line x1="56" y1="165" x2="476" y2="165" stroke="#CFD8DC" stroke-width="1"/>
+          <!-- grid -->
+          <line x1="56" y1="123" x2="476" y2="123" stroke="#EEF1F5" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="56" y1="82" x2="476" y2="82" stroke="#EEF1F5" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="56" y1="40" x2="476" y2="40" stroke="#EEF1F5" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- y labels -->
+          <text x="50" y="168" text-anchor="end" font-size="9" fill="#90A4AE">0</text>
+          <text x="50" y="126" text-anchor="end" font-size="9" fill="#90A4AE">200</text>
+          <text x="50" y="85" text-anchor="end" font-size="9" fill="#90A4AE">400</text>
+          <text x="50" y="43" text-anchor="end" font-size="9" fill="#90A4AE">600</text>
+          <!-- bars: data points ~406,430,460,510,570,630,700,760,810,846 for 2015-2024 -->
+          <!-- max=846, range 0-900, height 155px, scale=155/900=0.172 -->
+          <rect x="60"  y="95"  width="34" height="70" fill="#002060" rx="1"/><!-- 406 -->
+          <rect x="102" y="91"  width="34" height="74" fill="#002060" rx="1"/><!-- 430 -->
+          <rect x="144" y="86"  width="34" height="79" fill="#002060" rx="1"/><!-- 460 -->
+          <rect x="186" y="77"  width="34" height="88" fill="#0038A8" rx="1"/><!-- 510 -->
+          <rect x="228" y="67"  width="34" height="98" fill="#0038A8" rx="1"/><!-- 570 -->
+          <rect x="270" y="57"  width="34" height="108" fill="#0044CC" rx="1"/><!-- 630 -->
+          <rect x="312" y="45"  width="34" height="120" fill="#0044CC" rx="1"/><!-- 700 -->
+          <rect x="354" y="34"  width="34" height="131" fill="#0066CC" rx="1"/><!-- 760 -->
+          <rect x="396" y="26"  width="34" height="139" fill="#0066CC" rx="1"/><!-- 810 -->
+          <rect x="438" y="21"  width="34" height="144" fill="#1E88E5" rx="1"/><!-- 846 -->
+          <!-- value labels on bars -->
+          <text x="77"  y="92"  text-anchor="middle" font-size="8" fill="#fff" font-weight="600">406</text>
+          <text x="438+17" y="17" text-anchor="middle" font-size="8" fill="#0066CC" font-weight="700">846</text>
+          <!-- x labels -->
+          <text x="77"  y="176" text-anchor="middle" font-size="8" fill="#90A4AE">2015</text>
+          <text x="161" y="176" text-anchor="middle" font-size="8" fill="#90A4AE">2017</text>
+          <text x="245" y="176" text-anchor="middle" font-size="8" fill="#90A4AE">2019</text>
+          <text x="329" y="176" text-anchor="middle" font-size="8" fill="#90A4AE">2021</text>
+          <text x="413" y="176" text-anchor="middle" font-size="8" fill="#90A4AE">2023</text>
+          <text x="455" y="176" text-anchor="middle" font-size="8" fill="#0066CC" font-weight="600">2024</text>
+          <!-- arrow annotation -->
+          <text x="280" y="13" text-anchor="middle" font-size="8.5" fill="#0066CC" font-weight="700">+108% în 10 ani</text>
+        </svg>
+        <div class="chart-src">Sursa: Invest Europe Annual Activity Statistics 2024</div>
+      </div>
+
+      <!-- Right: key comparisons -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 2 — Top 5 Firme Globale (AUM, mld. USD 2024)</div>
+          <svg viewBox="0 0 280 160" style="height:155px;">
+            <line x1="80" y1="5" x2="80" y2="135" stroke="#CFD8DC" stroke-width="1"/>
+            <!-- Blackstone 1050, Apollo 700, KKR 630, Carlyle 430, EQT 260 — max 1100, w=190, scale=190/1100=0.173 -->
+            <text x="76" y="24"  text-anchor="end" font-size="8.5" fill="#546E7A">Blackstone</text>
+            <text x="76" y="48"  text-anchor="end" font-size="8.5" fill="#546E7A">Apollo</text>
+            <text x="76" y="72"  text-anchor="end" font-size="8.5" fill="#546E7A">KKR</text>
+            <text x="76" y="96"  text-anchor="end" font-size="8.5" fill="#546E7A">Carlyle</text>
+            <text x="76" y="120" text-anchor="end" font-size="8.5" fill="#546E7A">EQT</text>
+            <rect x="82" y="13"  width="181" height="14" fill="#002060" rx="1"/>
+            <rect x="82" y="37"  width="121" height="14" fill="#0038A8" rx="1"/>
+            <rect x="82" y="61"  width="109" height="14" fill="#0038A8" rx="1"/>
+            <rect x="82" y="85"  width="74"  height="14" fill="#0066CC" rx="1"/>
+            <rect x="82" y="109" width="45"  height="14" fill="#64B5F6" rx="1"/>
+            <text x="267" y="24"  font-size="8" fill="#002060" font-weight="700">$1,050B</text>
+            <text x="207" y="48"  font-size="8" fill="#0038A8" font-weight="700">$700B</text>
+            <text x="195" y="72"  font-size="8" fill="#0038A8" font-weight="700">$630B</text>
+            <text x="160" y="96"  font-size="8" fill="#0066CC" font-weight="700">$430B</text>
+            <text x="131" y="120" font-size="8" fill="#1565C0" font-weight="700">$260B</text>
+            <text x="80"  y="148" text-anchor="middle" font-size="7.5" fill="#90A4AE" font-style="italic">Mld. USD AUM global</text>
+          </svg>
+          <div class="chart-src">Sursa: McKinsey Global Private Markets Report 2024</div>
+        </div>
+        <div class="callout">
+          <div class="co-lbl">Context 2025</div>
+          <p>Deal count +5% și deal value +65% în 2024 față de 2023. Exit activity +105% (count) și +130% (value). <em>70% din profesioniști PE optimiști pentru 2025</em> (Dealsuite European PE Monitor 2025).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 04 — THEORETICAL FRAMEWORK
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Fundamentul analitic</div><div class="sh-title">Cadrul Teoretic: De Ce Câștigă Grupurile Mici</div></div>
+    <div class="sh-right">04</div>
+  </div>
+  <div class="sb">
+    <p class="lead-p" style="margin-bottom:16px;">Trei modele complementare explică împreună de ce fondurile de PE exercită o influență disproporționată față de greutatea lor numerică.</p>
+    <div class="g3">
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--blue3);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;">MODEL 01</div>
+        <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;">Bouwen (2002)</div>
+        <div style="font-size:.78rem;color:var(--blue3);margin-bottom:12px;font-style:italic;">„Access Goods" — bunuri de acces</div>
+        <div style="height:1px;background:rgba(255,255,255,.12);margin-bottom:12px;"></div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:10px;">Grupurile furnizează instituțiilor UE <strong style="color:#fff;">cunoaștere tehnică specializată</strong> în schimbul accesului la procesul decizional.</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;">
+          <strong style="color:var(--blue3);">Pentru PE:</strong> Datele sectoriale Invest Europe sunt citate în evaluările de impact ale Comisiei și avizele ESMA. Monopol informațional = capital politic valoros.
+        </div>
+      </div>
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--blue3);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;">MODEL 02</div>
+        <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;">Olson (1965)</div>
+        <div style="font-size:.78rem;color:var(--blue3);margin-bottom:12px;font-style:italic;">Logica acțiunii colective</div>
+        <div style="height:1px;background:rgba(255,255,255,.12);margin-bottom:12px;"></div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:10px;">Grupurile mici cu interese concentrate depășesc problema free-rider și se mobilizează mai eficient decât colectivitățile difuze.</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;">
+          <strong style="color:var(--blue3);">Pentru PE:</strong> Top-20 firme concentrează majoritate AUM. Stimulente selective Invest Europe (ghiduri exclusive, sesiuni lunare) asigură mobilizarea.
+        </div>
+      </div>
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--blue3);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;">MODEL 03</div>
+        <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;">Culpepper (2011)</div>
+        <div style="font-size:.78rem;color:var(--blue3);margin-bottom:12px;font-style:italic;">„Quiet Politics"</div>
+        <div style="height:1px;background:rgba(255,255,255,.12);margin-bottom:12px;"></div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:10px;">Influența grupurilor variază sistematic cu vizibilitatea publică: <strong style="color:#fff;">maximă în spațiile tehnice, atenuată sub presiunea mediatică.</strong></div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;">
+          <strong style="color:var(--blue3);">Confirmat:</strong> Stevens & De Bruycker (2020); De Bruycker & Hanegraaff (2024). PE câștigă pe tehnic, pierde pe vizibil.
+        </div>
+      </div>
+    </div>
+    <div class="insight" style="margin-top:14px;">
+      <div class="ins-lbl">Predicția combinată</div>
+      <div class="ins-text">PE excelează în condiții de <em>vizibilitate scăzută</em>, pe dosare tehnice regulatorii, cu coaliții largi care includ <em>investitori instituționali legitimi public</em> (fonduri de pensii) și cu poziții prezentate ca aliniate cu obiective europene (CMU, competitivitate, tranziție verde).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 05 — LOBBYING ARCHITECTURE
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Structura de reprezentare</div><div class="sh-title">4 Niveluri Complementare de Lobby</div></div>
+    <div class="sh-right">05</div>
+  </div>
+  <div class="sb">
+    <div class="ll-item">
+      <div class="ll-num">I</div>
+      <div class="ll-body">
+        <div class="ll-title">Nivelul Asociativ — Invest Europe (fondată 1983 ca EVCA, Bruxelles)</div>
+        <div class="ll-desc">700 firme membre + 500 afiliați din 57 țări; ~60% din AUM-ul industriei. <strong>Buget lobby: €1.25–1.49M/an; 49 întâlniri nivel înalt</strong> cu Comisari și DG FISMA, DG GROW, DG CLIMA, DG CNECT. Structura de guvernanță include Comitet Strategic Afaceri Publice + Comitet Servicii Financiare + grupuri de lucru AIFMD/ELTIF/sustenabilitate. Alături: AIMA (€800–899K/an; 27 întâlniri), asociații naționale (BVCA, France Invest, BVK, AIFI).</div>
+      </div>
+    </div>
+    <div class="ll-item">
+      <div class="ll-num">II</div>
+      <div class="ll-body">
+        <div class="ll-title">Nivelul Direct — Firme Individuale (cheltuieli declarate, LobbyFacts 2025)</div>
+        <div class="ll-desc">Carlyle: €200–299K, 4 întâlniri. Blackstone: €100–199K, 4 întâlniri nivel Comisar. EQT: €100–199K, 12 întâlniri. KKR: €50–99K, 17 întâlniri. <strong style="color:var(--red2);">Apollo Global, CVC Capital Partners și Advent International — neînregistrate în Registrul de Transparență</strong> deși operează masiv în Europa. Consistent cu Bouwen: firmele individuale furnizează expert knowledge specific; Invest Europe agregă European Encompassing Interest.</div>
+      </div>
+    </div>
+    <div class="ll-item">
+      <div class="ll-num">III</div>
+      <div class="ll-body">
+        <div class="ll-title">Nivelul Epistemic — Controlul Cunoașterii</div>
+        <div class="ll-desc">Invest Europe — membră CEPS și inițiativa Financial Future. BlackRock — membră corporativă Bruegel (buget ~€7.5M/an; cercetători care depun mărturie regulat în PE). Invest Europe sponsorizează Intergrupul PE privind Investițiile pe Termen Lung. <strong>Datele statistice anuale publicate de Invest Europe devin singura sursă de referință pentru evaluările de impact ale Comisiei.</strong> Monopol informațional = capital politic indirect, nemăsurabil prin Registrul de Transparență.</div>
+      </div>
+    </div>
+    <div class="ll-item">
+      <div class="ll-num">IV</div>
+      <div class="ll-body">
+        <div class="ll-title">Nivelul Coalițional — Valorificarea Bazei de Investitori</div>
+        <div class="ll-desc">Fonduri de pensii = 26% din dry powder al industriei europene → industria poate invoca impactul asupra <strong>pensionarilor europeni</strong> la orice amenințare legislativă. Pe Solvency II: coaliție cu asigurători. Pe ELTIF 2.0: fonduri de pensii + asigurători + sovereign wealth funds. Pe CMU: poziționare alături de BEI și Comisie — industria drept partener al competitivității europene, nu adversar al reglementării.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 06 — TRANSPARENCY REGISTER (CHART)
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Date cantitative — LobbyFacts.eu 2025</div><div class="sh-title">Registrul de Transparență: Cine Declară Cât</div></div>
+    <div class="sh-right">06</div>
+  </div>
+  <div class="sb">
+    <div class="g2-wide">
+      <div>
+        <!-- Chart: declared spending -->
+        <div class="chart-wrap" style="margin-bottom:12px;">
+          <div class="chart-title">Figura 3 — Cheltuieli Lobby Declarate/An (€ mii, mijlocul intervalului)</div>
+          <svg viewBox="0 0 400 190" style="height:175px;">
+            <line x1="110" y1="8" x2="110" y2="160" stroke="#CFD8DC" stroke-width="1"/>
+            <line x1="110" y1="160" x2="395" y2="160" stroke="#CFD8DC" stroke-width="1"/>
+            <!-- grid lines -->
+            <line x1="110" y1="130" x2="395" y2="130" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="110" y1="100" x2="395" y2="100" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="110" y1="70" x2="395" y2="70" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="110" y1="40" x2="395" y2="40" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <!-- y axis labels -->
+            <text x="105" y="163" text-anchor="end" font-size="8" fill="#90A4AE">0</text>
+            <text x="105" y="133" text-anchor="end" font-size="8" fill="#90A4AE">250</text>
+            <text x="105" y="103" text-anchor="end" font-size="8" fill="#90A4AE">500</text>
+            <text x="105" y="73"  text-anchor="end" font-size="8" fill="#90A4AE">750</text>
+            <text x="105" y="43"  text-anchor="end" font-size="8" fill="#90A4AE">1,000</text>
+            <!-- max ~1370, scale=152/1370=0.111 -->
+            <!-- Invest Europe 1370 -->
+            <rect x="116" y="8"   width="34" height="152" fill="#002060" rx="1"/>
+            <text x="133" y="6"   text-anchor="middle" font-size="7.5" fill="#002060" font-weight="700">1,370K</text>
+            <!-- AIMA 850 -->
+            <rect x="158" y="66"  width="34" height="94" fill="#003087" rx="1"/>
+            <text x="175" y="64"  text-anchor="middle" font-size="7.5" fill="#003087" font-weight="700">850K</text>
+            <!-- Carlyle 250 -->
+            <rect x="200" y="132" width="34" height="28" fill="#0066CC" rx="1"/>
+            <text x="217" y="130" text-anchor="middle" font-size="7.5" fill="#0066CC" font-weight="700">250K</text>
+            <!-- BlackStone 150 -->
+            <rect x="242" y="143" width="34" height="17" fill="#64B5F6" rx="1"/>
+            <text x="259" y="141" text-anchor="middle" font-size="7.5" fill="#1565C0" font-weight="700">150K</text>
+            <!-- EQT 150 -->
+            <rect x="284" y="143" width="34" height="17" fill="#64B5F6" rx="1"/>
+            <text x="301" y="141" text-anchor="middle" font-size="7.5" fill="#1565C0" font-weight="700">150K</text>
+            <!-- KKR 75 -->
+            <rect x="326" y="152" width="34" height="8" fill="#BBDEFB" rx="1"/>
+            <text x="343" y="150" text-anchor="middle" font-size="7.5" fill="#90A4AE" font-weight="700">75K</text>
+            <!-- Apollo/CVC/Advent: 0 -->
+            <rect x="368" y="155" width="24" height="5" fill="#FFEBEE" rx="1" stroke="#C62828" stroke-width="1" stroke-dasharray="2,2"/>
+            <text x="380" y="150" text-anchor="middle" font-size="6.5" fill="#C62828">N/A</text>
+            <!-- x labels -->
+            <text x="133" y="173" text-anchor="middle" font-size="7.5" fill="#002060" font-weight="700">Invest Eu.</text>
+            <text x="175" y="173" text-anchor="middle" font-size="7.5" fill="#546E7A">AIMA</text>
+            <text x="217" y="173" text-anchor="middle" font-size="7.5" fill="#546E7A">Carlyle</text>
+            <text x="259" y="173" text-anchor="middle" font-size="7.5" fill="#546E7A">Blackstone</text>
+            <text x="301" y="173" text-anchor="middle" font-size="7.5" fill="#546E7A">EQT</text>
+            <text x="343" y="173" text-anchor="middle" font-size="7.5" fill="#546E7A">KKR</text>
+            <text x="380" y="173" text-anchor="middle" font-size="7" fill="#C62828">Apollo+</text>
+            <text x="380" y="183" text-anchor="middle" font-size="6.5" fill="#C62828">Neînreg.</text>
+          </svg>
+          <div class="chart-src">Sursa: LobbyFacts.eu 2025; cheltuieli = mijlocul intervalului declarat</div>
+        </div>
+        <!-- Meetings chart -->
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 4 — Întâlniri Nivel Înalt cu Comisia (total declarat)</div>
+          <svg viewBox="0 0 400 90" style="height:85px;">
+            <line x1="110" y1="5" x2="110" y2="72" stroke="#CFD8DC" stroke-width="1"/>
+            <text x="105" y="19"  text-anchor="end" font-size="8.5" fill="#546E7A">Invest Europe</text>
+            <text x="105" y="37"  text-anchor="end" font-size="8.5" fill="#546E7A">AIMA</text>
+            <text x="105" y="55"  text-anchor="end" font-size="8.5" fill="#546E7A">EQT</text>
+            <text x="105" y="73"  text-anchor="end" font-size="8.5" fill="#546E7A">KKR</text>
+            <!-- max=49, width=280, scale=280/49=5.7 -->
+            <rect x="112" y="9"  width="279" height="12" fill="#002060" rx="1"/>
+            <rect x="112" y="27" width="154" height="12" fill="#003087" rx="1"/>
+            <rect x="112" y="45" width="68"  height="12" fill="#0066CC" rx="1"/>
+            <rect x="112" y="63" width="97"  height="12" fill="#1E88E5" rx="1"/>
+            <text x="395" y="19"  font-size="8" fill="#002060" font-weight="700">49</text>
+            <text x="270" y="37"  font-size="8" fill="#003087" font-weight="700">27</text>
+            <text x="184" y="55"  font-size="8" fill="#0066CC" font-weight="700">12</text>
+            <text x="213" y="73"  font-size="8" fill="#1E88E5" font-weight="700">17</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="sub" style="margin-top:0;">Tabloul Complet — Status Înregistrare</div>
+        <table class="dt" style="font-size:.78rem;">
+          <thead><tr><th>Entitate</th><th>Cheltuieli/An</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Invest Europe</strong></td><td class="mono">€1.25–1.49M</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td>AIMA</td><td class="mono">€800–899K</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td>Carlyle Group</td><td class="mono">€200–299K</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td>Blackstone</td><td class="mono">€100–199K</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td>EQT</td><td class="mono">€100–199K</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td>KKR</td><td class="mono">€50–99K</td><td><span class="pill ok">Înregistrat</span></td></tr>
+            <tr><td style="color:var(--red2)"><strong>Apollo Global (~$700B AUM)</strong></td><td class="mono" style="color:var(--red2)">—</td><td><span class="pill no">Neînregistrat</span></td></tr>
+            <tr><td style="color:var(--red2)"><strong>CVC Capital Partners</strong></td><td class="mono" style="color:var(--red2)">—</td><td><span class="pill no">Neînregistrat</span></td></tr>
+            <tr><td style="color:var(--red2)"><strong>Advent International</strong></td><td class="mono" style="color:var(--red2)">—</td><td><span class="pill no">Neînregistrat</span></td></tr>
+          </tbody>
+        </table>
+        <div class="callout" style="margin-top:12px;">
+          <div class="co-lbl">Context 2025 — Sectorul Financiar</div>
+          <p>162 entități declară >€1M/an, cheltuind colectiv <em>€343M în 2024–2025</em>. Total estimat Bruxelles: <em>€1.6–2.2 miliarde/an</em>, ~25.000–30.000 lobbyști activi. Creștere 13% față de 2024, +30% față de 2020. (CEO & LobbyControl, feb. 2025)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 07 — AIFMD BATTLE (TIMELINE)
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Studiu de caz principal</div><div class="sh-title">AIFMD 2009–2011: Cum a Câștigat Industria Bătălia Legislativă</div></div>
+    <div class="sh-right">07</div>
+  </div>
+  <div class="sb">
+    <div class="g2-wide">
+      <div>
+        <div class="sub" style="margin-top:0;">Cronologia Procesului Legislativ</div>
+        <div class="tl">
+          <div class="tl-item neu">
+            <div class="tl-yr">2006</div>
+            <div class="tl-txt">Comisarul McCreevy decide <strong>să nu propună nicio reglementare</strong> pentru fondurile alternative, pe baza recomandărilor unui grup consultativ dominat de industrie. <em style="color:var(--navy);">Captură preventivă de agendă.</em></div>
+          </div>
+          <div class="tl-item neg">
+            <div class="tl-yr">2008 Q4</div>
+            <div class="tl-txt">Criza financiară globală. Context high-salience: colaps bancar, șomaj, intervenție de stat. <strong>Fereastră politică</strong> pentru reglementarea industriei alternative, exploatată de alianța franco-germană.</div>
+          </div>
+          <div class="tl-item neg">
+            <div class="tl-yr">30 Apr 2009</div>
+            <div class="tl-txt">Propunerea Comisiei <strong>COM(2009) 207</strong>: excludere manageri terțe țări, prag control 30%, limite hard leverage, restricții delegare.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-yr">Mai 2009</div>
+            <div class="tl-txt">EVCA activează <strong>Grupul Tehnic AIFMD</strong> (pregătit din 2008). Coaliție: EVCA + AIMA + BVCA + MFA (SUA). Lansare strategie în două faze.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-yr">Mart 2010</div>
+            <div class="tl-txt">Secretarul Trezoreriei SUA <strong>Timothy Geithner</strong> scrie șefilor de stat europeni cerând excluderea managerilor americani. Lobby diplomatic transnațional.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-yr">H1 2010</div>
+            <div class="tl-txt"><strong>46 de întâlniri documentate</strong> între MEP-ii conservatori britanici și industria fondurilor. Din ~1.600 amendamente parlamentare, <strong>~800 redactate de lobbyști</strong> (CEO, 2010).</div>
+          </div>
+          <div class="tl-item pos">
+            <div class="tl-yr">8 Iun 2011</div>
+            <div class="tl-txt">Adoptarea <strong>Directivei 2011/61/UE (AIFMD)</strong>. Text final diferă semnificativ față de propunerea inițială pe toate punctele cheie.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sub" style="margin-top:0;">Strategia de Lobby: Două Faze (Woll, 2013)</div>
+        <!-- Strategy diagram -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+          <div style="background:var(--sky);border:1px solid var(--sky2);padding:14px 16px;">
+            <div style="font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px;">Faza 1: Opoziție Zgomotoasă (2009–2010)</div>
+            <ul style="list-style:none;">
+              <li style="font-size:.8rem;color:var(--text2);padding-left:12px;position:relative;margin-bottom:4px;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Comunicate alarmiste: „fuga capitalului spre offshore"</li>
+              <li style="font-size:.8rem;color:var(--text2);padding-left:12px;position:relative;margin-bottom:4px;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Mobilizare diplomatică SUA (scrisoarea Geithner)</li>
+              <li style="font-size:.8rem;color:var(--text2);padding-left:12px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Obiectiv: presiune politică generală, salience externă</li>
+            </ul>
+          </div>
+          <div style="text-align:center;font-size:1.2rem;color:var(--navy);">↓</div>
+          <div style="background:var(--navy);padding:14px 16px;">
+            <div style="font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:6px;">Faza 2: Influență Tehnică Discretă (2010–2011)</div>
+            <ul style="list-style:none;">
+              <li style="font-size:.8rem;color:rgba(255,255,255,.75);padding-left:12px;position:relative;margin-bottom:4px;"><span style="position:absolute;left:0;color:var(--blue3);">▸</span>Modelarea amendamentelor specifice în ECON</li>
+              <li style="font-size:.8rem;color:rgba(255,255,255,.75);padding-left:12px;position:relative;margin-bottom:4px;"><span style="position:absolute;left:0;color:var(--blue3);">▸</span>Influență în trilogul Parlament–Consiliu–Comisie</li>
+              <li style="font-size:.8rem;color:rgba(255,255,255,.75);padding-left:12px;position:relative;"><span style="position:absolute;left:0;color:var(--blue3);">▸</span>Obiectiv: concesii tehnice cu vizibilitate minimă</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="co-lbl">Evaluare — Ferran (2011, p.408)</div>
+          <p>Industria <em>„a demonstrat o capacitate remarcabilă de a modela legislația de o complexitate considerabilă, astfel încât aceasta să răspundă preocupărilor sale fundamentale."</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 08 — AIFMD SCORECARD
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Rezultatele campaniei</div><div class="sh-title">AIFMD: Ce a Cerut Comisia vs. Ce a Obținut Industria</div></div>
+    <div class="sh-right">08</div>
+  </div>
+  <div class="sb">
+    <div style="margin-bottom:12px;">
+      <div class="comp">
+        <div class="comp-hd before">Propunere Comisie — Apr 2009</div>
+        <div class="comp-hd arrow"></div>
+        <div class="comp-hd after">Directiva 2011/61/UE — Text Final</div>
+
+        <div class="comp-cell before">Prag control anti-asset stripping: <strong>30%</strong> din drepturile de vot</div>
+        <div class="comp-cell arrow">→</div>
+        <div class="comp-cell after">Prag ridicat la <strong>50%</strong> — domeniu de aplicare restrâns semnificativ</div>
+
+        <div class="comp-cell before"><strong>Limite hard</strong> (plafonare fixă) a gradului de levier</div>
+        <div class="comp-cell arrow">→</div>
+        <div class="comp-cell after">Limite hard <strong>eliminate</strong> — înlocuite cu raportare și transparență fără plafoane</div>
+
+        <div class="comp-cell before">Excludere cvasi-totală manageri terțe țări de pe piața UE</div>
+        <div class="comp-cell arrow">→</div>
+        <div class="comp-cell after">NPPR menținute; pașaportul pentru terțe țări <strong>neactivat niciodată</strong> (15+ ani)</div>
+
+        <div class="comp-cell before"><strong>Restricții severe</strong> la delegarea gestionării portofoliului</div>
+        <div class="comp-cell arrow">→</div>
+        <div class="comp-cell after">Modele de delegare <strong>păstrate</strong> fără modificări fundamentale</div>
+
+        <div class="comp-cell before">Remunerare asimilată regulilor bancare (CRD) — aplicabilitate generală</div>
+        <div class="comp-cell arrow">→</div>
+        <div class="comp-cell after">Reguli <strong>atenuate</strong>, principles-based, cu flexibilitate la implementare</div>
+      </div>
+    </div>
+    <!-- Scorecard chart -->
+    <div class="chart-wrap">
+      <div class="chart-title">Figura 5 — Scorecard: Obiective Industrie vs. Rezultat Final AIFMD</div>
+      <svg viewBox="0 0 700 90" style="height:85px;">
+        <!-- 5 objectives, each with bar indicating win/loss -->
+        <!-- Legend -->
+        <rect x="10" y="5" width="10" height="10" fill="#1B5E20"/>
+        <text x="24" y="14" font-size="8.5" fill="#546E7A">Victorie industrie</text>
+        <rect x="130" y="5" width="10" height="10" fill="#E65100"/>
+        <text x="144" y="14" font-size="8.5" fill="#546E7A">Victorie parțială</text>
+        <rect x="265" y="5" width="10" height="10" fill="#B71C1C"/>
+        <text x="279" y="14" font-size="8.5" fill="#546E7A">Înfrângere industrie</text>
+
+        <!-- 5 result blocks -->
+        <rect x="10"  y="28" width="100" height="20" fill="#1B5E20" rx="2"/>
+        <rect x="120" y="28" width="100" height="20" fill="#1B5E20" rx="2"/>
+        <rect x="230" y="28" width="100" height="20" fill="#1B5E20" rx="2"/>
+        <rect x="340" y="28" width="100" height="20" fill="#1B5E20" rx="2"/>
+        <rect x="450" y="28" width="100" height="20" fill="#2E7D32" rx="2"/>
+
+        <text x="60"  y="41" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Prag control ↑50%</text>
+        <text x="170" y="41" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Leverage limits ×</text>
+        <text x="280" y="41" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Pașaport terțe neactivat</text>
+        <text x="390" y="41" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Delegare păstrată</text>
+        <text x="500" y="41" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Remunerare atenuată</text>
+
+        <text x="60"  y="62" text-anchor="middle" font-size="7" fill="#1B5E20">Cerere: 30%</text>
+        <text x="170" y="62" text-anchor="middle" font-size="7" fill="#1B5E20">Cerere: fără plafon</text>
+        <text x="280" y="62" text-anchor="middle" font-size="7" fill="#1B5E20">15 ani fără activare</text>
+        <text x="390" y="62" text-anchor="middle" font-size="7" fill="#1B5E20">Confirmat AIFMD II</text>
+        <text x="500" y="62" text-anchor="middle" font-size="7" fill="#2E7D32">Principles-based</text>
+
+        <!-- Score indicator -->
+        <text x="558" y="42" text-anchor="start" font-size="10" fill="#1B5E20" font-weight="700">5/5 <tspan font-size="8.5" fill="#90A4AE" font-weight="400">obiective atinse</tspan></text>
+      </svg>
+      <div class="chart-src">Analiza autorului pe baza: Quaglia (2011), Woll (2013), Ferran (2011), Buckley & Howarth (2011)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 09 — DOSARE LEGISLATIVE (SCORECARD)
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Câmpuri de influență</div><div class="sh-title">Scoreccard Legislativ: 6 Dosare, 2011–2025</div></div>
+    <div class="sh-right">09</div>
+  </div>
+  <div class="sb">
+    <div class="chart-title" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:16px;">Figura 6 — Scorecard Legislativ: Obiective vs. Rezultate (2011–2025)</div>
+    <table class="dt" style="font-size:.92rem;margin-bottom:20px;">
+      <thead>
+        <tr>
+          <th style="width:16%;">Dosar</th>
+          <th style="width:30%;">Obiectiv Industrie</th>
+          <th style="width:38%;">Rezultat Obținut</th>
+          <th style="width:16%;text-align:center;">Scor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--navy);">AIFMD (2011)</strong></td>
+          <td class="muted">Atenuarea propunerii inițiale a Comisiei</td>
+          <td style="color:var(--green2);font-weight:500;">Prag control 30→50%, leverage eliminat, pașaport terțe neactivat (15+ ani)</td>
+          <td style="text-align:center;"><span class="pill ok">VICTORIE</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy);">AIFMD II (2024)</strong></td>
+          <td class="muted">Păstrarea delegării și grandfathering</td>
+          <td style="color:var(--green2);font-weight:500;">Delegare nerestricționată + 5 ani grandfathering fonduri de credit</td>
+          <td style="text-align:center;"><span class="pill ok">VICTORIE</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy);">ELTIF 2.0 (2024)</strong></td>
+          <td class="muted">Liberalizare condiții acces investitori</td>
+          <td style="color:var(--green2);font-weight:500;">Active eligibile 70→55%, prag retail €10K eliminat, structuri semi-lichide permise</td>
+          <td style="text-align:center;"><span class="pill ok">VICTORIE</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy);">Solvency II (2016–18)</strong></td>
+          <td class="muted">Reducere cerințe capital PE</td>
+          <td style="color:var(--green2);font-weight:500;">Cerință capital: 49% → 22% (Long-Term Equity), infrastructură proiecte 30%</td>
+          <td style="text-align:center;"><span class="pill ok">VICTORIE</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy);">SFDR 2.0 (în curs)</strong></td>
+          <td class="muted">Opt-out pentru investitori profesioniști</td>
+          <td style="color:var(--orange);font-weight:500;">Text leaked nov. 2025: opt-out posibil — negociere în curs</td>
+          <td style="text-align:center;"><span class="pill warn">PARȚIAL</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--navy);">ATAD (2016+)</strong></td>
+          <td class="muted">Limitarea impactului LBO</td>
+          <td style="color:var(--orange);font-weight:500;">Interpretări favorabile selectiv în mai multe state membre (ex: Belgia)</td>
+          <td style="text-align:center;"><span class="pill warn">PARȚIAL</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="g2" style="gap:14px;">
+      <div style="background:var(--sky);border-left:4px solid var(--navy);padding:18px 22px;">
+        <div style="font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:8px;">Puterea Structurală — CMU/SIU</div>
+        <div style="font-size:.9rem;color:var(--text2);line-height:1.7;">Raportul Draghi (2024): Europa necesită investiții echivalente cu 5% din PIB/an. Industria se poziționează ca <strong>partener al competitivității europene</strong> — forma cea mai durabilă de putere structurală (Woll, 2016).</div>
+      </div>
+      <div style="background:var(--navy);padding:18px 22px;">
+        <div style="font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:8px;">Bilanțul Final (2011–2025)</div>
+        <div style="font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.7;"><strong style="color:#fff;font-size:1.1rem;">4 din 6</strong> dosare — victorie completă. <strong style="color:#fff;">2 din 6</strong> — parțial favorabile. <strong style="color:#fff;">0 înfrângeri nete</strong> pe obiectivele centrale în 15 ani de reglementare post-criză.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 10 — QUIET POLITICS MECHANISM
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Mecanismul central</div><div class="sh-title">Quiet Politics: Când Câștigă și Când Pierde Industria</div></div>
+    <div class="sh-right">10</div>
+  </div>
+  <div class="sb">
+    <p style="font-size:.95rem;color:var(--text2);line-height:1.7;max-width:780px;margin-bottom:24px;">Culpepper (2011) și Stevens &amp; De Bruycker (2020): resursele financiare ale industriei avantajează maxim în condiții de vizibilitate scăzută. Sub lumina reflectoarelor publice, opinia publică contrabalansează.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+      <!-- Left: table + callout -->
+      <div>
+        <div class="sub" style="margin-top:0;">Aplicare Directă: Cazul AIFMD</div>
+        <table class="dt" style="font-size:.9rem;margin-bottom:16px;">
+          <thead>
+            <tr>
+              <th>Dimensiune</th>
+              <th>Salience</th>
+              <th>Rezultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Reglementarea adoptată</td>
+              <td><span class="pill no" style="background:#FFEBEE;color:#C62828;border:none;">RIDICATĂ</span></td>
+              <td style="color:var(--red2);">Industria a pierdut — legea adoptată</td>
+            </tr>
+            <tr>
+              <td>Prag control 30%→50%</td>
+              <td><span class="pill ok" style="background:#E8F5E9;color:#2E7D32;border:none;">SCĂZUTĂ</span></td>
+              <td style="color:var(--green2);font-weight:600;">Obținut — industria a câștigat</td>
+            </tr>
+            <tr>
+              <td>Limite leverage eliminate</td>
+              <td><span class="pill ok" style="background:#E8F5E9;color:#2E7D32;border:none;">SCĂZUTĂ</span></td>
+              <td style="color:var(--green2);font-weight:600;">Obținut — industria a câștigat</td>
+            </tr>
+            <tr>
+              <td>Pașaport terțe țări</td>
+              <td><span class="pill ok" style="background:#E8F5E9;color:#2E7D32;border:none;">SCĂZUTĂ</span></td>
+              <td style="color:var(--green2);font-weight:600;">Neactivat 15+ ani — industria a câștigat</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <div class="co-lbl">De Bruycker &amp; Hanegraaff (2024, EJPR)</div>
+          <p>Grupurile bine dotate cu resurse sunt mai influente, dar <em>numai</em> când pozițiile lor se aliniază cu opinia publică. Pe dosarele cu opoziție publică ridicată, resursele singure nu câștigă.</p>
+        </div>
+      </div>
+
+      <!-- Right: big clean chart -->
+      <div class="chart-wrap">
+          <div class="chart-title">Figura 7 — Matricea Influență / Salience</div>
+          <div class="chart-sub">Influența industriei variază invers cu vizibilitatea publică a dosarului</div>
+          <svg viewBox="0 0 560 200" style="height:192px;">
+            <defs>
+              <marker id="ahSal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                <polygon points="0 0,7 2.5,0 5" fill="#90A4AE"/>
+              </marker>
+            </defs>
+            <line x1="30" y1="18" x2="528" y2="18" stroke="#CFD8DC" stroke-width="1.5" marker-end="url(#ahSal)"/>
+            <text x="30"  y="12" font-size="9" fill="#90A4AE">Salience Scăzut</text>
+            <text x="528" y="12" text-anchor="end" font-size="9" fill="#90A4AE">Salience Ridicat</text>
+            <rect x="18"  y="26" width="252" height="163" fill="rgba(0,32,96,.05)" stroke="#002060" stroke-width="1.5" rx="3"/>
+            <text x="144" y="43" text-anchor="middle" font-size="11" fill="#002060" font-weight="700">SALIENCE SCĂZUT → Industria CÂȘTIGĂ</text>
+            <rect x="30"  y="52"  width="228" height="28" fill="#1B5E20" rx="2"/>
+            <text x="144" y="71"  text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">Prag control 30% → 50%</text>
+            <rect x="30"  y="86"  width="228" height="28" fill="#1B5E20" rx="2"/>
+            <text x="144" y="105" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">Limite leverage eliminate</text>
+            <rect x="30"  y="120" width="228" height="28" fill="#1B5E20" rx="2"/>
+            <text x="144" y="139" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">Pașaport terțe neactivat (15+ ani)</text>
+            <text x="144" y="177" text-anchor="middle" font-size="9.5" fill="#1B5E20" font-weight="700">3 victorii tehnice decisive</text>
+            <rect x="290" y="26" width="252" height="163" fill="rgba(183,28,28,.05)" stroke="#B71C1C" stroke-width="1.5" rx="3"/>
+            <text x="416" y="43" text-anchor="middle" font-size="11" fill="#B71C1C" font-weight="700">SALIENCE RIDICAT → Industria PIERDE</text>
+            <rect x="302" y="52"  width="228" height="28" fill="#B71C1C" rx="2"/>
+            <text x="416" y="71"  text-anchor="middle" font-size="10.5" fill="#fff" font-weight="600">AIFMD adoptată (2011)</text>
+            <text x="416" y="105" text-anchor="middle" font-size="9.5" fill="#546E7A">Reglementarea în sine nu a putut fi blocată.</text>
+            <text x="416" y="120" text-anchor="middle" font-size="9.5" fill="#546E7A">Context post-criză cu presiune maximă.</text>
+            <text x="416" y="135" text-anchor="middle" font-size="9.5" fill="#546E7A">Conținutul directivei: atenuare pe toate</text>
+            <text x="416" y="150" text-anchor="middle" font-size="9.5" fill="#546E7A">punctele tehnice cheie.</text>
+            <text x="416" y="177" text-anchor="middle" font-size="9.5" fill="#B71C1C" font-weight="700">1 înfrângere formală → 3 victorii tehnice</text>
+          </svg>
+          <div class="chart-src">Bazat pe: Culpepper (2011); Stevens &amp; De Bruycker (2020); Woll (2013)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 11 — REVOLVING DOOR & EPISTEMIC CAPTURE
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Mecanisme de influență invizibilă</div><div class="sh-title">Ușa Turnantă și Captura Epistemică</div></div>
+    <div class="sh-right">11</div>
+  </div>
+  <div class="sb">
+    <div class="g2" style="gap:24px;">
+      <!-- Left: revolving door -->
+      <div>
+        <div class="sub" style="margin-top:0;">I. Fenomenul Ușii Turnante</div>
+        <div style="background:var(--sky);border:1px solid var(--sky2);padding:16px 20px;margin-bottom:14px;">
+          <div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:6px;">Cazul Karel De Gucht</div>
+          <div style="font-size:.88rem;color:var(--text2);line-height:1.65;">Comisar European Comerț (2010–2014) → Consiliu Consultativ <strong>CVC Capital Partners</strong> (apr. 2015). Autorizat cu moratoriu de lobbying de 18 luni. Aduce capital relațional, nu informații confidențiale.</div>
+        </div>
+        <div class="callout" style="margin-bottom:16px;">
+          <div class="co-lbl">Date Sistemice (ALTER-EU)</div>
+          <p><em>&gt;50%</em> din personalul celor mai mari firme de lobbying din Bruxelles provine din instituțiile UE. Comisia aprobase <em>99%</em> din cererile de tranziție. Redert (2022): foști oficiali = noduri centrale în rețelele post-criză.</p>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 8 — Ciclul Ușii Turnante</div>
+          <svg viewBox="0 0 340 160" style="height:155px;">
+            <!-- Left box: Institutions -->
+            <rect x="20" y="50" width="120" height="55" fill="#002060" rx="3"/>
+            <text x="80" y="72"  text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Instituții UE</text>
+            <text x="80" y="87"  text-anchor="middle" font-size="9"  fill="rgba(255,255,255,.75)">Comisie, ESMA</text>
+            <text x="80" y="99"  text-anchor="middle" font-size="9"  fill="rgba(255,255,255,.75)">Parlament European</text>
+
+            <!-- Right box: Industry -->
+            <rect x="200" y="50" width="120" height="55" fill="#E65100" rx="3"/>
+            <text x="260" y="72"  text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Industrie PE</text>
+            <text x="260" y="87"  text-anchor="middle" font-size="9"  fill="rgba(255,255,255,.75)">Firme, Invest Europe</text>
+            <text x="260" y="99"  text-anchor="middle" font-size="9"  fill="rgba(255,255,255,.75)">Asociații lobbying</text>
+
+            <!-- Top arrow: expertise → access -->
+            <defs>
+              <marker id="ah2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                <polygon points="0 0, 7 2.5, 0 5" fill="#1B5E20"/>
+              </marker>
+              <marker id="ah3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                <polygon points="0 0, 7 2.5, 0 5" fill="#0066CC"/>
+              </marker>
+            </defs>
+            <path d="M 142 63 C 160 40 180 40 198 63" stroke="#1B5E20" stroke-width="2" fill="none" marker-end="url(#ah2)"/>
+            <text x="170" y="32" text-anchor="middle" font-size="9.5" fill="#1B5E20" font-weight="600">Expertiză → acces</text>
+
+            <!-- Bottom arrow: personal → relational networks -->
+            <path d="M 198 92 C 180 120 160 120 142 92" stroke="#0066CC" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+            <text x="170" y="140" text-anchor="middle" font-size="9.5" fill="#0066CC" font-weight="600">Personal → rețele relaționale</text>
+
+            <!-- Central label -->
+            <text x="170" y="158" text-anchor="middle" font-size="8.5" fill="#90A4AE" font-style="italic">Capital relațional + cunoaștere procesuală</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: epistemic capture -->
+      <div>
+        <div class="sub" style="margin-top:0;">II. Captura Epistemică</div>
+        <p style="font-size:.88rem;color:var(--text2);line-height:1.65;margin-bottom:14px;">Controlul asupra cadrelor conceptuale prin care sunt formulate problemele de politică publică — mai subtil și mai durabil decât lobby-ul direct. Young &amp; Pagliari (2017): soluțiile dorite de industrie apar ca <em>singurele tehnic fezabile</em>.</p>
+
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 9 — Mecanismul Capturii Epistemice</div>
+          <div class="chart-sub">Cum datele industriei devin infrastructura normativă</div>
+          <svg viewBox="0 0 580 258" style="height:248px;">
+            <!-- Trapezoids: taper gently so bottom stays wide enough for text -->
+            <polygon points="10,12 570,12 525,68 55,68"    fill="#002060"/>
+            <polygon points="55,73 525,73 480,128 100,128" fill="#003087"/>
+            <polygon points="100,133 480,133 440,188 140,188" fill="#0044CC"/>
+            <polygon points="140,193 440,193 405,243 175,243" fill="#1E88E5"/>
+            <!-- Labels centred in each band -->
+            <text x="290" y="46"  text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Invest Europe publică date statistice anuale</text>
+            <text x="290" y="104" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Citate în evaluările de impact ale Comisiei</text>
+            <text x="290" y="163" text-anchor="middle" font-size="11.5" fill="#fff" font-weight="700">Incorporat în avizele ESMA și RTS-uri</text>
+            <text x="290" y="222" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Devine infrastructura normativă a reglementării</text>
+          </svg>
+          <div class="chart-src">Bazat pe: Coen &amp; Katsaitis (2013); Young &amp; Pagliari (2017)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 12 — COMPARATIVE ANALYSIS
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Analiza comparativă</div><div class="sh-title">PE față de Alte Grupuri de Interese Financiare</div></div>
+    <div class="sh-right">12</div>
+  </div>
+  <div class="sb">
+    <div class="g2-wide" style="gap:24px;">
+      <div>
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 10 — Profilul Comparativ: Resurse vs. Expertiză vs. Legitimitate</div>
+          <div class="chart-sub">Dimensiunea cercului = legitimitate publică percepută</div>
+          <svg viewBox="0 0 500 320" style="height:310px;">
+            <defs>
+              <marker id="ah4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                <polygon points="0 0, 7 2.5, 0 5" fill="#90A4AE"/>
+              </marker>
+            </defs>
+            <!-- Axes -->
+            <line x1="60" y1="280" x2="60"  y2="15" stroke="#90A4AE" stroke-width="1.5" marker-end="url(#ah4)"/>
+            <line x1="60" y1="280" x2="490" y2="280" stroke="#90A4AE" stroke-width="1.5" marker-end="url(#ah4)"/>
+            <text x="18" y="158" text-anchor="middle" transform="rotate(-90,18,158)" font-size="10" fill="#546E7A" font-weight="500">EXPERTIZĂ TEHNICĂ</text>
+            <text x="275" y="304" text-anchor="middle" font-size="10" fill="#546E7A" font-weight="500">RESURSE FINANCIARE LOBBY</text>
+            <!-- Grid lines -->
+            <line x1="60" y1="195" x2="490" y2="195" stroke="#EEF1F5" stroke-dasharray="4,3" stroke-width="1"/>
+            <line x1="60" y1="110" x2="490" y2="110" stroke="#EEF1F5" stroke-dasharray="4,3" stroke-width="1"/>
+            <line x1="275" y1="15" x2="275" y2="280" stroke="#EEF1F5" stroke-dasharray="4,3" stroke-width="1"/>
+            <!-- Axis ticks -->
+            <text x="55"  y="285" text-anchor="end" font-size="9" fill="#90A4AE">Scăz.</text>
+            <text x="55"  y="198" text-anchor="end" font-size="9" fill="#90A4AE">Med.</text>
+            <text x="55"  y="113" text-anchor="end" font-size="9" fill="#90A4AE">Ridicat</text>
+            <text x="63"  y="294" font-size="9" fill="#90A4AE">Scăzut</text>
+            <text x="275" y="294" text-anchor="middle" font-size="9" fill="#90A4AE">Mediu</text>
+            <text x="484" y="294" text-anchor="end" font-size="9" fill="#90A4AE">Ridicat</text>
+
+            <!-- Bănci: x=390, y=68, r=34 — big circle, high everything -->
+            <circle cx="390" cy="68"  r="34" fill="rgba(0,32,96,.13)" stroke="#002060" stroke-width="2"/>
+            <text x="390" y="63"  text-anchor="middle" font-size="12" fill="#002060" font-weight="700">Bănci</text>
+            <text x="390" y="78"  text-anchor="middle" font-size="9.5" fill="#546E7A">(EBF)</text>
+
+            <!-- PE: x=255, y=50, r=26 — med circle, highest expertise -->
+            <circle cx="255" cy="52"  r="26" fill="rgba(0,102,204,.18)" stroke="#0066CC" stroke-width="2"/>
+            <text x="255" y="47"  text-anchor="middle" font-size="12" fill="#0066CC" font-weight="700">PE</text>
+            <text x="255" y="62"  text-anchor="middle" font-size="9.5" fill="#546E7A">(Invest Europe)</text>
+
+            <!-- Hedge funds: x=160, y=100, r=20 -->
+            <circle cx="160" cy="100" r="20" fill="rgba(230,81,0,.12)" stroke="#E65100" stroke-width="2"/>
+            <text x="160" y="95"  text-anchor="middle" font-size="11"  fill="#E65100" font-weight="700">Hedge Funds</text>
+            <text x="160" y="109" text-anchor="middle" font-size="9"   fill="#546E7A">(AIMA)</text>
+
+            <!-- Asiguratori: x=320, y=115, r=24 -->
+            <circle cx="320" cy="118" r="24" fill="rgba(0,131,143,.11)" stroke="#00838F" stroke-width="2"/>
+            <text x="320" y="113" text-anchor="middle" font-size="11"  fill="#00838F" font-weight="700">Asiguratori</text>
+            <text x="320" y="127" text-anchor="middle" font-size="9"   fill="#546E7A">(Insurance Europe)</text>
+
+            <!-- ONG-uri: x=90, y=195, r=16 -->
+            <circle cx="90"  cy="195" r="16" fill="rgba(27,94,32,.1)" stroke="#2E7D32" stroke-width="2"/>
+            <text x="90"  y="190" text-anchor="middle" font-size="11"  fill="#2E7D32" font-weight="700">ONG-uri</text>
+            <text x="90"  y="203" text-anchor="middle" font-size="9"   fill="#546E7A">civice</text>
+
+            <!-- PE advantage annotation — top right, away from bubbles -->
+            <line x1="282" y1="44" x2="340" y2="30" stroke="#0066CC" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="342" y="16" font-size="10" fill="#0066CC" font-weight="600">Expertiză ↑, vizibilitate ↓</text>
+            <text x="342" y="28" font-size="9"  fill="#546E7A">avantaj competitiv cheie</text>
+          </svg>
+          <div class="chart-src">Bazat pe: Pagliari &amp; Young (2014); Chalmers (2020); Woll (2013); Quaglia (2011)</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="sub" style="margin-top:0;">Ce Diferențiază PE</div>
+        <div class="card">
+          <div class="card-h">PE vs. Bănci</div>
+          <p>Băncile dețin putere structurală macroprudențială superioară (instabilitate → crize sistemice). PE excelează pe dosare tehnice circumscrise. Avantaj comparativ PE: mobilitate strategică și expertiză de nișă.</p>
+        </div>
+        <div class="card">
+          <div class="card-h">PE vs. Hedge Funds</div>
+          <p>Strategii divergente în AIFMD: PE a invocat finanțarea economiei reale și a IME-urilor. Capital de simpatie politic indisponibil hedge funds. Rezultat: regulament separat EuVECA (2013).</p>
+        </div>
+        <div class="card">
+          <div class="card-h">PE vs. ONG-uri Civice</div>
+          <p>Chalmers (2020): unitatea internă = predictor semnificativ al succesului de lobby, independent de cheltuieli. Invest Europe: disciplină de mesaj vs. mandate contradictorii ale grupurilor civice.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 13 — 2025-2029 AGENDA
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Perspectiva prospectivă</div><div class="sh-title">Agenda de Reglementare 2025–2029: 4 Fronturi Active</div></div>
+    <div class="sh-right">13</div>
+  </div>
+  <div class="sb">
+    <div class="chart-wrap" style="margin-bottom:20px;">
+      <div class="chart-title">Figura 11 — Matricea Priorități: Impact vs. Urgență (Perspectiva Industriei PE, 2025–2029)</div>
+      <svg viewBox="0 0 580 280" style="height:270px;">
+        <!-- Quadrant backgrounds -->
+        <rect x="55" y="15"  width="240" height="120" fill="#FFF3E0" stroke="#FFB74D" stroke-width="1.5" rx="2"/>
+        <rect x="295" y="15" width="270" height="120" fill="#E8F5E9" stroke="#66BB6A" stroke-width="1.5" rx="2"/>
+        <rect x="55" y="135" width="240" height="120" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="1" rx="2"/>
+        <rect x="295" y="135" width="270" height="120" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1" rx="2"/>
+
+        <!-- Quadrant labels -->
+        <text x="175" y="32"  text-anchor="middle" font-size="10" fill="#E65100" font-weight="700">URGENT / IMPACT MEDIU</text>
+        <text x="430" y="32"  text-anchor="middle" font-size="10" fill="#1B5E20" font-weight="700">URGENT / IMPACT MARE ★</text>
+        <text x="175" y="152" text-anchor="middle" font-size="10" fill="#90A4AE">MONITORIZARE</text>
+        <text x="430" y="152" text-anchor="middle" font-size="10" fill="#0066CC">IMPORTANT / TERMEN LUNG</text>
+
+        <!-- Content boxes inside quadrants -->
+        <!-- Q2 top-right: SFDR 2.0 + NBFI -->
+        <rect x="302" y="40" width="122" height="82" fill="#002060" rx="3"/>
+        <text x="363" y="58"  text-anchor="middle" font-size="11"  fill="#fff" font-weight="700">SFDR 2.0</text>
+        <text x="363" y="73"  text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.85)">Opt-out profesioniști</text>
+        <text x="363" y="86"  text-anchor="middle" font-size="9"   fill="rgba(255,255,255,.7)">Termen: 2025–2026</text>
+        <text x="363" y="100" text-anchor="middle" font-size="9"   fill="#64B5F6" font-weight="600">→ Favorabil în evoluție</text>
+        <text x="363" y="115" text-anchor="middle" font-size="8"   fill="rgba(255,255,255,.5)">Invest Europe: prioritate max.</text>
+
+        <rect x="430" y="40" width="122" height="82" fill="#003087" rx="3"/>
+        <text x="491" y="58"  text-anchor="middle" font-size="11"  fill="#fff" font-weight="700">NBFI (BCE/FSB)</text>
+        <text x="491" y="73"  text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.85)">Noi cerințe capital/raportare</text>
+        <text x="491" y="86"  text-anchor="middle" font-size="9"   fill="rgba(255,255,255,.7)">Termen: 2025–2027</text>
+        <text x="491" y="100" text-anchor="middle" font-size="9"   fill="#FF8A80" font-weight="600">→ Front defensiv activ</text>
+        <text x="491" y="115" text-anchor="middle" font-size="8"   fill="rgba(255,255,255,.5)">Proskauer (2025): front principal</text>
+
+        <!-- Q1 top-left: SIU retail -->
+        <rect x="62" y="40" width="224" height="82" fill="#E65100" rx="3"/>
+        <text x="174" y="58"  text-anchor="middle" font-size="11"  fill="#fff" font-weight="700">SIU / CMU 2.0 — Retail</text>
+        <text x="174" y="73"  text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.85)">Acces investitori retail la fonduri alternative</text>
+        <text x="174" y="86"  text-anchor="middle" font-size="9"   fill="rgba(255,255,255,.7)">Pachet legislativ dec. 2024, termen 2026</text>
+        <text x="174" y="100" text-anchor="middle" font-size="9"   fill="#FFCC80" font-weight="600">→ Oportunitate cu riscuri reputaționale</text>
+        <text x="174" y="115" text-anchor="middle" font-size="8"   fill="rgba(255,255,255,.5)">Piața retail = potențial exponențial</text>
+
+        <!-- Q4 bottom-right: Pilonul 2 -->
+        <rect x="302" y="160" width="258" height="82" fill="#1565C0" rx="3"/>
+        <text x="431" y="178" text-anchor="middle" font-size="11"  fill="#fff" font-weight="700">Pilonul 2 OCDE (Dir. 2022/2523)</text>
+        <text x="431" y="193" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.85)">Taxă globală minimă 15% pe profituri</text>
+        <text x="431" y="206" text-anchor="middle" font-size="9"   fill="rgba(255,255,255,.7)">Restructurare fiscală fonduri 2025–2028</text>
+        <text x="431" y="220" text-anchor="middle" font-size="9"   fill="#FF8A80" font-weight="600">→ Amenințare structurală pe termen lung</text>
+        <text x="431" y="234" text-anchor="middle" font-size="8"   fill="rgba(255,255,255,.5)">Lux, Irlanda, Olanda: presiune de restructurare</text>
+
+        <!-- Q3 bottom-left: ATAD III -->
+        <rect x="62" y="160" width="224" height="82" fill="#78909C" rx="3"/>
+        <text x="174" y="178" text-anchor="middle" font-size="11"  fill="#fff" font-weight="700">ATAD III — Deductibilitate LBO</text>
+        <text x="174" y="193" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,.85)">Limitele deductibilității dobânzii</text>
+        <text x="174" y="206" text-anchor="middle" font-size="9"   fill="rgba(255,255,255,.7)">Impact indirect modelul buyout (LBO)</text>
+        <text x="174" y="220" text-anchor="middle" font-size="9"   fill="#FFCC80" font-weight="600">→ Monitorizare, impact moderat</text>
+        <text x="174" y="234" text-anchor="middle" font-size="8"   fill="rgba(255,255,255,.5)">Interpretări favorabile selectiv în SM</text>
+
+        <!-- Axis labels -->
+        <text x="32"  y="80"  text-anchor="middle" transform="rotate(-90,32,80)"  font-size="10" fill="#546E7A" font-weight="500">IMPACT ↑</text>
+        <text x="32"  y="195" text-anchor="middle" transform="rotate(-90,32,195)" font-size="10" fill="#546E7A" font-weight="500">IMPACT ↓</text>
+        <text x="175" y="270" text-anchor="middle" font-size="10" fill="#546E7A" font-weight="500">URGENȚĂ SCĂZUTĂ</text>
+        <text x="430" y="270" text-anchor="middle" font-size="10" fill="#546E7A" font-weight="500">URGENȚĂ RIDICATĂ →</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 14 — ROMANIA
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Perspectiva națională</div><div class="sh-title">România: O Piață Periferică în Ecosistemul PE European</div></div>
+    <div class="sh-right">14</div>
+  </div>
+  <div class="sb">
+    <div class="g2" style="gap:24px;">
+      <!-- Left: big chart -->
+      <div>
+        <div class="chart-wrap">
+          <div class="chart-title">Figura 12 — Investiții PE/VC ca % din PIB (medie 2015–2023)</div>
+          <div class="chart-sub">România se situează la 1/4 din media europeană</div>
+          <svg viewBox="0 0 340 260" style="height:255px;">
+            <defs>
+              <marker id="ah5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                <polygon points="0 0, 7 2.5, 0 5" fill="#90A4AE"/>
+              </marker>
+            </defs>
+            <line x1="55" y1="230" x2="55"  y2="15" stroke="#90A4AE" stroke-width="1.5" marker-end="url(#ah5)"/>
+            <line x1="55" y1="230" x2="335" y2="230" stroke="#90A4AE" stroke-width="1.5"/>
+
+            <!-- Y axis labels -->
+            <text x="50" y="234" text-anchor="end" font-size="9" fill="#90A4AE">0%</text>
+            <text x="50" y="186" text-anchor="end" font-size="9" fill="#90A4AE">0.15%</text>
+            <text x="50" y="138" text-anchor="end" font-size="9" fill="#90A4AE">0.30%</text>
+            <text x="50" y="90"  text-anchor="end" font-size="9" fill="#90A4AE">0.45%</text>
+            <text x="50" y="42"  text-anchor="end" font-size="9" fill="#90A4AE">0.60%</text>
+
+            <!-- Grid lines -->
+            <line x1="55" y1="186" x2="335" y2="186" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="55" y1="138" x2="335" y2="138" stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="55" y1="90"  x2="335" y2="90"  stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+            <line x1="55" y1="42"  x2="335" y2="42"  stroke="#EEF1F5" stroke-dasharray="3,3" stroke-width="1"/>
+
+            <!-- Bars: scale = 215/0.6 = 358 units per %. Bar width 48, spacing 10 -->
+            <!-- UK 0.55%: height = 0.55*358 = 197 -->
+            <rect x="64"  y="33"  width="48" height="197" fill="#002060" rx="2"/>
+            <text x="88"  y="25"  text-anchor="middle" font-size="10" fill="#002060" font-weight="700">~0.55%</text>
+            <text x="88"  y="245" text-anchor="middle" font-size="9"  fill="#546E7A">UK</text>
+            <text x="88"  y="256" text-anchor="middle" font-size="8"  fill="#90A4AE">(pre-Brexit)</text>
+
+            <!-- Suedia 0.38%: height = 136 -->
+            <rect x="124" y="94"  width="48" height="136" fill="#003087" rx="2"/>
+            <text x="148" y="86"  text-anchor="middle" font-size="10" fill="#003087" font-weight="700">~0.38%</text>
+            <text x="148" y="245" text-anchor="middle" font-size="9"  fill="#546E7A">Suedia</text>
+
+            <!-- Media UE 0.30%: height = 107 -->
+            <rect x="184" y="123" width="48" height="107" fill="#0066CC" rx="2"/>
+            <text x="208" y="115" text-anchor="middle" font-size="10" fill="#0066CC" font-weight="700">~0.30%</text>
+            <text x="208" y="245" text-anchor="middle" font-size="9"  fill="#546E7A">Media UE</text>
+
+            <!-- Romania 0.08%: height = 29 -->
+            <rect x="244" y="201" width="48" height="29" fill="#FFCDD2" stroke="#C62828" stroke-width="1.5" rx="2"/>
+            <text x="268" y="195" text-anchor="middle" font-size="10" fill="#C62828" font-weight="700">~0.08%</text>
+            <text x="268" y="245" text-anchor="middle" font-size="9"  fill="#C62828" font-weight="600">România</text>
+
+            <!-- Arrow annotation for gap -->
+            <line x1="208" y1="123" x2="268" y2="201" stroke="#C62828" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="248" y="162" text-anchor="middle" font-size="9" fill="#C62828" font-weight="600">×3.75</text>
+            <text x="248" y="173" text-anchor="middle" font-size="8"  fill="#90A4AE">sub media UE</text>
+          </svg>
+          <div class="chart-src">Sursa: Invest Europe; estimări autor pentru România (2015–2023)</div>
+        </div>
+      </div>
+
+      <!-- Right: 3 level items + callout -->
+      <div>
+        <div class="sub" style="margin-top:0;">Asimetria de Capacitate — 3 Niveluri</div>
+        <div class="ll-item" style="margin-bottom:6px;">
+          <div class="ll-num" style="width:52px;font-size:.75rem;">I</div>
+          <div class="ll-body">
+            <div class="ll-title">Absența cadrului legal de lobby</div>
+            <div class="ll-desc">La Bruxelles: Registru de Transparență + norme de conduită. La nivel național: interacțiunile rămân informale și nedocumentate. Informalitatea nu reduce influența — o face imposibil de contrabalansat democratic (Tănăsescu, 2015; Cerkez, 2010).</div>
+          </div>
+        </div>
+        <div class="ll-item" style="margin-bottom:6px;">
+          <div class="ll-num" style="width:52px;font-size:.75rem;">II</div>
+          <div class="ll-body">
+            <div class="ll-title">Transpunere fidelă fără adaptări naționale</div>
+            <div class="ll-desc">AIFMD → Legea 74/2015: transpunere fidelă textului european fără adaptări naționale. Reflectă capacitatea administrativă limitată și absența unui lobby național de PE articulat pentru a modela implementarea în favoarea condițiilor locale.</div>
+          </div>
+        </div>
+        <div class="ll-item" style="margin-bottom:14px;">
+          <div class="ll-num" style="width:52px;font-size:.75rem;">III</div>
+          <div class="ll-body">
+            <div class="ll-title">Periferializare prin standardele tehnice europene</div>
+            <div class="ll-desc">Limitele ELTIF 2.0, cerințele de depozitar AIFMD și calibrările Solvency II nu reflectă nevoile piețelor emergente — au fost calibrate de interesele centrelor financiare dominante (Luxemburg, Irlanda, UK). Formă subtilă de influență structurală.</div>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="co-lbl">Pilonul II — Cercul Vicios</div>
+          <p>Contribuții reduse 2017: 5.1%→3.75%. Fără investitori instituționali locali robuști → dependență de capital extern → ecosistem de capital subdezvolt → reglementare calibrată pe interesele centrelor financiare occidentale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 15 — ORIGINAL ARGUMENT
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Contribuția originală</div><div class="sh-title">Argumentul Propriu: Asimetria Cognitivă Instituționalizată</div></div>
+    <div class="sh-right">15</div>
+  </div>
+  <div class="sb" style="padding:16px 48px 12px;">
+    <!-- Compact thesis statement -->
+    <div style="background:var(--navy);padding:14px 24px;margin-bottom:14px;border-left:4px solid var(--blue2);">
+      <div style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue3);font-weight:700;margin-bottom:6px;">Teza Sintetică Originală</div>
+      <div style="font-size:.9rem;color:#fff;line-height:1.6;font-weight:300;">
+        Influența PE în UE nu este o problemă de <span style="color:var(--blue3);font-weight:600;">lobby excesiv</span>, ci de <span style="color:#fff;font-weight:700;border-bottom:2px solid var(--blue2);">asimetrie cognitivă instituționalizată</span>: regulatorii depind structural de expertiză pe care industria o deține în exclusivitate și nu există un mecanism alternativ credibil.
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <!-- Left: Figura 13 — bigger, cleaner nodes -->
+      <div class="chart-wrap">
+        <div class="chart-title">Figura 13 — Structura Problemei: Dependența Cognitivă</div>
+        <svg viewBox="0 0 480 290" style="height:278px;">
+          <defs>
+            <marker id="mRed" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#C62828"/>
+            </marker>
+            <marker id="mGray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#78909C"/>
+            </marker>
+            <marker id="mGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#1B5E20"/>
+            </marker>
+          </defs>
+
+          <!-- TOP: Regulatorul UE -->
+          <rect x="165" y="12" width="150" height="52" fill="#002060" rx="4"/>
+          <text x="240" y="33"  text-anchor="middle" font-size="12.5" fill="#fff" font-weight="700">Regulatorul UE</text>
+          <text x="240" y="50"  text-anchor="middle" font-size="9.5"  fill="rgba(255,255,255,.75)">ESMA, DG FISMA, Comisie</text>
+
+          <!-- BOTTOM-LEFT: Nevoie de Expertiza — x=15, width=158 -->
+          <rect x="15"  y="220" width="158" height="55" fill="#C62828" rx="4"/>
+          <text x="94"  y="241" text-anchor="middle" font-size="12"   fill="#fff" font-weight="700">Nevoie de</text>
+          <text x="94"  y="256" text-anchor="middle" font-size="12"   fill="#fff" font-weight="700">Expertiză</text>
+          <text x="94"  y="270" text-anchor="middle" font-size="9"    fill="rgba(255,255,255,.75)">Date, modele, interpretări</text>
+
+          <!-- BOTTOM-RIGHT: Industria PE — x=307, width=158 -->
+          <rect x="307" y="220" width="158" height="55" fill="#1B5E20" rx="4"/>
+          <text x="386" y="241" text-anchor="middle" font-size="12"   fill="#fff" font-weight="700">Industria PE</text>
+          <text x="386" y="256" text-anchor="middle" font-size="9.5"  fill="rgba(255,255,255,.8)">Singurul furnizor</text>
+          <text x="386" y="269" text-anchor="middle" font-size="9.5"  fill="rgba(255,255,255,.8)">disponibil</text>
+
+          <!-- Arrow: Regulator → Nevoie (diagonal left-down) -->
+          <line x1="196" y1="64" x2="120" y2="216" stroke="#C62828" stroke-width="2.5" marker-end="url(#mRed)"/>
+          <text x="120" y="132" text-anchor="end" font-size="9.5" fill="#C62828">generează</text>
+          <text x="120" y="145" text-anchor="end" font-size="9.5" fill="#C62828">nevoie</text>
+
+          <!-- Arrow: Regulator → Industry (diagonal right-down) -->
+          <line x1="284" y1="64" x2="360" y2="216" stroke="#78909C" stroke-width="2.5" marker-end="url(#mGray)"/>
+          <text x="362" y="132" font-size="9.5" fill="#78909C">emite</text>
+          <text x="362" y="145" font-size="9.5" fill="#78909C">reglementare</text>
+
+          <!-- Arrow: Industry → Nevoie (horizontal, BETWEEN boxes) -->
+          <!-- Arrow goes from x=305 to x=175, y=247 (middle of boxes) -->
+          <line x1="305" y1="247" x2="177" y2="247" stroke="#1B5E20" stroke-width="2.5" marker-end="url(#mGreen)"/>
+          <!-- Label ABOVE the arrow, in the gap between boxes -->
+          <text x="241" y="238" text-anchor="middle" font-size="10" fill="#1B5E20" font-weight="700">furnizează expertiză</text>
+
+          <!-- Central: Captură Structurală -->
+          <rect x="158" y="118" width="164" height="36" fill="#B71C1C" rx="4"/>
+          <text x="240" y="140" text-anchor="middle" font-size="11.5" fill="#fff" font-weight="700">CAPTURĂ STRUCTURALĂ</text>
+        </svg>
+      </div>
+
+      <!-- Right: 3 text cards stacked -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="sub" style="margin-top:0;">Diagnosticul și Soluția</div>
+        <div class="card">
+          <div class="card-h">De ce registrele de transparență nu rezolvă</div>
+          <p>Atâta vreme cât regulatorii depind de date și modele furnizate de industria reglementată, influența nu va fi redusă prin înregistrare mai strictă sau limite de cheltuieli. Problema nu este accesul — este monopolul cognitiv.</p>
+        </div>
+        <div class="card">
+          <div class="card-h">Soluția Structurală</div>
+          <p>Investiție masivă în capacitate de analiză independentă la nivelul ESMA, Comisiei și think tank-urilor non-profit — o reformă cu costuri concrete și beneficii democratice difuze.</p>
+        </div>
+        <div class="callout" style="margin:0;">
+          <div class="co-lbl">Woll (2016) — Puterea Structurală</div>
+          <p>Când Draghi estimează nevoi de 5% din PIB/an și PE gestionează €846B, cadrul dezbaterii e configurat în favoarea industriei <em>înainte</em> ca un lobbyst să ceară o întâlnire.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 16 — CONCLUSIONS
+══════════════════════════════════════════════════ -->
+<section class="slide">
+  <div class="sh">
+    <div class="sh-left"><div class="sh-tag">Sinteza analitică</div><div class="sh-title">Concluzii: Trei Dimensiuni</div></div>
+    <div class="sh-right">16</div>
+  </div>
+  <div class="sb">
+    <!-- Big timeline -->
+    <div class="chart-wrap" style="margin-bottom:20px;">
+      <div class="chart-title">Figura 14 — Industria PE în Procesul Legislativ UE: 15 Ani de Influență (2009–2025)</div>
+      <svg viewBox="0 0 760 190" style="height:182px;">
+        <!-- Timeline line -->
+        <line x1="40" y1="90" x2="730" y2="90" stroke="#CFD8DC" stroke-width="3"/>
+
+        <!-- 2009 — red, ABOVE -->
+        <circle cx="72"  cy="90" r="10" fill="#C62828"/>
+        <line x1="72"  y1="80" x2="72"  y2="38" stroke="#C62828" stroke-width="1.5"/>
+        <text x="72"  y="31"  text-anchor="middle" font-size="10.5" fill="#C62828"  font-weight="700">2009</text>
+        <text x="72"  y="108" text-anchor="middle" font-size="9.5"  fill="#546E7A">Propunere</text>
+        <text x="72"  y="120" text-anchor="middle" font-size="9.5"  fill="#546E7A">Comisie</text>
+
+        <!-- 2011 — green, BELOW -->
+        <circle cx="196" cy="90" r="10" fill="#1B5E20"/>
+        <line x1="196" y1="80" x2="196" y2="38" stroke="#1B5E20" stroke-width="1"/>
+        <text x="196" y="31"  text-anchor="middle" font-size="10.5" fill="#1B5E20"  font-weight="700">2011</text>
+        <line x1="196" y1="100" x2="196" y2="135" stroke="#1B5E20" stroke-width="1.5"/>
+        <text x="196" y="147" text-anchor="middle" font-size="9.5"  fill="#546E7A">AIFMD adoptată</text>
+        <text x="196" y="160" text-anchor="middle" font-size="10"   fill="#1B5E20"  font-weight="700">5/5 obiective</text>
+
+        <!-- 2016-18 — green, ABOVE -->
+        <circle cx="330" cy="90" r="10" fill="#1B5E20"/>
+        <line x1="330" y1="80" x2="330" y2="38" stroke="#1B5E20" stroke-width="1.5"/>
+        <text x="330" y="31"  text-anchor="middle" font-size="10.5" fill="#1B5E20"  font-weight="700">2016–18</text>
+        <text x="330" y="108" text-anchor="middle" font-size="9.5"  fill="#546E7A">Solvency II</text>
+        <text x="330" y="120" text-anchor="middle" font-size="10"   fill="#1B5E20"  font-weight="600">Capital 49→22%</text>
+
+        <!-- Ian 2024 — green, BELOW -->
+        <circle cx="468" cy="90" r="10" fill="#1B5E20"/>
+        <line x1="468" y1="80" x2="468" y2="38" stroke="#1B5E20" stroke-width="1"/>
+        <text x="468" y="31"  text-anchor="middle" font-size="10.5" fill="#1B5E20"  font-weight="700">Ian 2024</text>
+        <line x1="468" y1="100" x2="468" y2="135" stroke="#1B5E20" stroke-width="1.5"/>
+        <text x="468" y="147" text-anchor="middle" font-size="9.5"  fill="#546E7A">ELTIF 2.0</text>
+        <text x="468" y="160" text-anchor="middle" font-size="10"   fill="#1B5E20"  font-weight="600">Liberalizare totală</text>
+
+        <!-- Apr 2024 — green, ABOVE -->
+        <circle cx="590" cy="90" r="10" fill="#1B5E20"/>
+        <line x1="590" y1="80" x2="590" y2="38" stroke="#1B5E20" stroke-width="1.5"/>
+        <text x="590" y="31"  text-anchor="middle" font-size="10.5" fill="#1B5E20"  font-weight="700">Apr 2024</text>
+        <text x="590" y="108" text-anchor="middle" font-size="9.5"  fill="#546E7A">AIFMD II</text>
+        <text x="590" y="120" text-anchor="middle" font-size="10"   fill="#1B5E20"  font-weight="600">Delegare OK</text>
+
+        <!-- 2025+ — orange, BELOW -->
+        <circle cx="700" cy="90" r="10" fill="#E65100" opacity=".8"/>
+        <circle cx="700" cy="90" r="15" fill="none" stroke="#E65100" stroke-dasharray="3,2" stroke-width="1.5"/>
+        <line x1="700" y1="80" x2="700" y2="38" stroke="#E65100" stroke-width="1" stroke-dasharray="4,2"/>
+        <text x="700" y="31"  text-anchor="middle" font-size="10.5" fill="#E65100"  font-weight="700">2025+</text>
+        <line x1="700" y1="100" x2="700" y2="140" stroke="#E65100" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="700" y="152" text-anchor="middle" font-size="9.5"  fill="#546E7A">SFDR 2.0</text>
+        <text x="700" y="165" text-anchor="middle" font-size="10"   fill="#E65100"  font-weight="600">NBFI · Pilonul 2</text>
+
+        <!-- Legend -->
+        <circle cx="42"  cy="178" r="6" fill="#1B5E20"/>
+        <text x="53"  y="182" font-size="9.5" fill="#546E7A">Victorie industrie</text>
+        <circle cx="175" cy="178" r="6" fill="#C62828"/>
+        <text x="186" y="182" font-size="9.5" fill="#546E7A">Moment de presiune</text>
+        <circle cx="320" cy="178" r="6" fill="#E65100" opacity=".8"/>
+        <text x="331" y="182" font-size="9.5" fill="#546E7A">Dosare în curs</text>
+      </svg>
+    </div>
+
+    <div class="g3" style="gap:12px;">
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:rgba(255,255,255,.18);margin-bottom:6px;">01</div>
+        <div style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue3);margin-bottom:8px;font-weight:700;">Empirică</div>
+        <div style="font-size:.87rem;color:rgba(255,255,255,.85);line-height:1.65;">Industria nu a blocat reglementarea post-criză, dar a gestionat strategic conținutul. Modelul Culpepper confirmat: câștig pe tehnic discret, pierdere pe vizibilitate ridicată.</div>
+      </div>
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:rgba(255,255,255,.18);margin-bottom:6px;">02</div>
+        <div style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue3);margin-bottom:8px;font-weight:700;">Teoretică</div>
+        <div style="font-size:.87rem;color:rgba(255,255,255,.85);line-height:1.65;">Bouwen–Olson–Culpepper prezice corect strategia industriei. Woll (2016) adaugă: puterea structurală — capacitatea de a modela termenii dezbaterii publice.</div>
+      </div>
+      <div style="background:var(--navy);padding:20px 18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:rgba(255,255,255,.18);margin-bottom:6px;">03</div>
+        <div style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue3);margin-bottom:8px;font-weight:700;">Normativă</div>
+        <div style="font-size:.87rem;color:rgba(255,255,255,.85);line-height:1.65;">Problema nu este participarea industriei, ci arhitectura de transparență insuficientă. Apollo, CVC, Advent neînregistrate. Reformă: înregistrare universală + auditare independentă.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 17 — FINAL
+══════════════════════════════════════════════════ -->
+<section class="slide" id="final-slide">
+  <div class="cov-stripe"></div>
+  <div class="cov-bg"></div>
+  <div class="cov-accent" style="font-size:6rem;right:64px;top:auto;bottom:100px;">2026</div>
+  <div class="final-body">
+    <div class="final-rule"></div>
+    <div class="final-quote">
+      „Influența fondurilor de private equity în UE nu este o problemă de lobby excesiv — este o problemă de <em>asimetrie cognitivă instituționalizată</em>: regulatorii depind structural de expertiză produsă exclusiv de industria pe care o reglementează. Atâta vreme cât această asimetrie persistă, nicio reformă a Registrului de Transparență nu va rezolva problema de fond."
+    </div>
+    <div class="final-meta">
+      <div><div class="cm-lbl">Autor</div><div class="cm-val">Tufiș Andrei-Mihai</div></div>
+      <div><div class="cm-lbl">64 Surse Bibliografice</div><div class="cm-val">Academice, legislative, date sectoriale</div></div>
+<div><div class="cm-lbl">Cadru Teoretic</div><div class="cm-val">Bouwen · Olson · Culpepper · Woll</div></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- NAV BAR -->
+<div id="nav-bar">
+  <button class="nbtn" id="btn-prev" onclick="nav(-1)" disabled>← Anterior</button>
+  <span id="slide-ctr"><span id="cur">1</span> / <span id="tot">17</span></span>
+  <button class="nbtn" id="btn-next" onclick="nav(1)">Următor →</button>
+</div>
+<div id="kb">← → pentru navigare &nbsp;·&nbsp; F pentru fullscreen</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+document.getElementById('tot').textContent = N;
+
+function nav(d) {
+  const next = cur + d;
+  if (next < 0 || next >= N) return;
+  const out = slides[cur];
+  const inn = slides[next];
+  out.classList.remove('active');
+  if (d > 0) { out.classList.add('prev'); setTimeout(()=>out.classList.remove('prev'),400); }
+  inn.classList.remove('prev');
+  inn.classList.add('active');
+  cur = next;
+  sync();
+  triggerBars();
+}
+
+function sync() {
+  document.getElementById('cur').textContent = cur + 1;
+  document.getElementById('prog-fill').style.width = ((cur+1)/N*100)+'%';
+  document.getElementById('btn-prev').disabled = cur===0;
+  const btnNext = document.getElementById('btn-next');
+  btnNext.disabled = cur===N-1;
+  btnNext.style.visibility = cur===N-1 ? 'hidden' : 'visible';
+}
+
+function triggerBars() {
+  const sl = slides[cur];
+  sl.querySelectorAll('.bar-anim').forEach(b=>{
+    const w = b.getAttribute('data-w')||'0';
+    b.style.width = '0';
+    setTimeout(()=>{b.style.width=w+'%';},60);
+  });
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();nav(1);}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();nav(-1);}
+  else if(e.key==='Escape'){slides[cur].classList.remove('active');cur=0;slides[0].classList.add('active');sync();}
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});}
+});
+
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-tx;if(Math.abs(dx)>50)nav(dx<0?1:-1);},{passive:true});
+
+const kb = document.getElementById('kb');
+setTimeout(()=>kb.classList.add('show'),1200);
+setTimeout(()=>kb.classList.remove('show'),5500);
+
+sync();
+</script>
+</body>
+</html>
